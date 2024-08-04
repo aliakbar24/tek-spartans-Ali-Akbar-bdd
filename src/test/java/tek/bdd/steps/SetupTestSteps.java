@@ -7,10 +7,6 @@ import org.openqa.selenium.By;
 import tek.bdd.utility.SeleniumUtility;
 
 public class SetupTestSteps extends SeleniumUtility {
-    @Given("Open browser and navigate to retail app")
-    public void openBrowserAndNavigate() {
-        setupBrowser();
-    }
     @Then("validate top left corner is TEKSCHOOL")
     public void validateTopLeftLogo() {
         String topLeftCornerText = getElementText(By.className("top-nav__logo"));
@@ -18,8 +14,10 @@ public class SetupTestSteps extends SeleniumUtility {
 
     }
 
-    @Then("Close the browser")
-    public void closeBrowser(){
-        quitBrowser();
+    @Then("validate Sign in button is enabled")
+    public void validateSignInButtonIsEnabled(){
+        boolean isSignInBtnEnabled = isElementEnabled(By.id("signinLink"));
+        Assert.assertTrue(isSignInBtnEnabled);
+
     }
 }

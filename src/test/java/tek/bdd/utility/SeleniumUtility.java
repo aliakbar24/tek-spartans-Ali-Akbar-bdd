@@ -33,4 +33,9 @@ public class SeleniumUtility extends BaseSetup {
     public String getElementText(By locator) {
         return waitForVisibility(locator).getText();
     }
+
+    public boolean isElementEnabled(By locator) {
+        return waitForVisibility(locator)
+                .isEnabled();
+    }
 }
