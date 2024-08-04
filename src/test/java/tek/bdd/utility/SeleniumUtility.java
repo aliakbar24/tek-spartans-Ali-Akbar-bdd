@@ -12,7 +12,7 @@ import java.time.Duration;
 public class SeleniumUtility extends BaseSetup {
 
     private WebDriverWait getWait() {
-        return new WebDriverWait((getDriver(), Duration.ofSeconds(10));
+        return new WebDriverWait(getDriver(), Duration.ofSeconds(10));
     }
         //create a method to click on a given locator
         public void clickOnElement(By locator) {
