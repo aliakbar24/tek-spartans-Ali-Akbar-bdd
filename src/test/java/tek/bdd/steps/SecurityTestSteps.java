@@ -23,7 +23,7 @@ public class SecurityTestSteps extends SeleniumUtility {
 
     @When("user enter username and password and click on login")
     public void user_enter_username_and_password_and_click_on_login() {
-        sendText(SignInPage.EMAIL_INPUT, "mohammad2536@gmail.com");
+        sendText(SignInPage.EMAIL_INPUT, "akbar.ali@gmail.com");
         sendText(SignInPage.PASSWORD_INPUT, "Password@123");
         clickOnElement(SignInPage.LOGIN_BUTTON);
     }
@@ -44,7 +44,6 @@ public class SecurityTestSteps extends SeleniumUtility {
     @Then("user should see error {string}")
     public void userShouldSeeError(String expectedErrorMessage) {
         String actualErrorMessage = getElementText(SignInPage.ERROR_MESSAGE);
-
         Assert.assertEquals(expectedErrorMessage, actualErrorMessage);
     }
 }
