@@ -6,12 +6,14 @@ import io.cucumber.java.en.Then;
 
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.WebElement;
 import tek.bdd.pages.AccountPage;
 import tek.bdd.pages.HomePage;
 import tek.bdd.pages.SignUpPage;
 import tek.bdd.utility.RandomGenerator;
 import tek.bdd.utility.SeleniumUtility;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -78,6 +80,7 @@ public class CreateAccountSteps extends SeleniumUtility {
         sendText(SignUpPage.PASSWORD_INPUT, password);
         sendText(SignUpPage.CONFIRM_PASSWORD, password);
     }
+
     @When("user enter new account as list of list")
     public void user_enter_new_account_as_list_of_list(DataTable dataTable) {
         //convert data table to List of List
@@ -111,5 +114,53 @@ public class CreateAccountSteps extends SeleniumUtility {
         sendText(SignUpPage.EMAIL_INPUT, emailToUse);
         sendText(SignUpPage.PASSWORD_INPUT, password);
         sendText(SignUpPage.CONFIRM_PASSWORD, password);
+    }
+
+    @Then("validate field error messages")
+    public void validate_field_error_messages(DataTable dataTable) {
+        List<String> expectedData = dataTable.asList();
+        List<WebElement> errorElements = getElements(SignUpPage.ERROR_MESSAGE);
+        Assert.assertEquals("Number of Error message should be same as Expected",
+                expectedData.size(),
+                errorElements.size());
+        for (int index = 0; index < expectedData.size(); index++) {
+            String expected = expectedData.get(index);
+            String actual = errorElements.get(index).getText();
+
+            Assert.assertEquals("Error Message should match", expected, actual);
+        }
+    }
+
+    @Then("validate field error messages using map")
+    public void validate_field_error_messages_using_map(DataTable dataTable) {
+        Map<String, String> expectedData = dataTable.asMap();
+
+        List<WebElement> errorElements = getElements(SignUpPage.ERROR_MESSAGE);
+        Assert.assertEquals("Number of Error message should be same as Expected", expectedData.size(),
+                errorElements.size());
+        Map<String, String> actualError = new HashMap<>();
+        for(WebElement element : errorElements) {
+            String text = element.getText();
+            String key = text.split(" ")[0];
+            actualError.put(key, text);
+        }
+        for (String key : expectedData.keySet()) {
+            Assert.assertEquals("Error Message should match", expectedData.get(key),
+                    actualError.get(key));
+        }
+
+        //        Assert.assertEquals("Error Message should match",
+        //                expectedData.get("name"),
+        //                errorElements.get(0).getText());
+        //        Assert.assertEquals("Error Message should match",
+        //                expectedData.get("email"),
+        //                errorElements.get(1).getText());
+        //        Assert.assertEquals("Error Message should match",
+        //                expectedData.get("password"),
+        //                errorElements.get(2).getText());
+        //        Assert.assertEquals("Error Message should match",
+        //                expectedData.get("confirm"),
+        //                errorElements.get(3).getText());
+
     }
 }
