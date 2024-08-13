@@ -8,6 +8,7 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
+import javax.swing.plaf.metal.MetalLookAndFeel;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,6 +16,10 @@ import java.time.Duration;
 import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import tek.bdd.browsers.BaseBrowser;
+import tek.bdd.browsers.ChromeBrowser;
+import tek.bdd.browsers.EdgeBrowser;
+import tek.bdd.browsers.FireFoxBrowser;
 
 public abstract class BaseSetup {
     private static final Logger LOGGER = LogManager.getLogger(BaseSetup.class);
@@ -46,23 +51,38 @@ public abstract class BaseSetup {
         String browserType = properties.getProperty("ui.browser");
         boolean isHeadless = Boolean.parseBoolean(properties.getProperty("ui.browser.headless"));
         LOGGER.info("Running on browser {} and isHeadless {}", browserType, isHeadless);
-        if(browserType.equalsIgnoreCase("chrome")) {
-            ChromeOptions options = new ChromeOptions();
-            if (isHeadless)
-                options.addArguments("--headless");
-            driver = new ChromeDriver(options);
-        }else if (browserType.equalsIgnoreCase("edge")) {
-            EdgeOptions options = new EdgeOptions();
-            if (isHeadless) options.addArguments("--headless");
-            driver = new EdgeDriver(options);
-        } else if (browserType.equalsIgnoreCase("firefox")) {
-            FirefoxOptions options = new FirefoxOptions();
-            if (isHeadless)
-                options.addArguments("--headless");
-            driver = new FirefoxDriver();
-        }else {
-            throw new RuntimeException("Wrong browser type choose between chrome, firefox, or edge");
-        }
+
+        BaseBrowser browser;
+
+        if(browserType.equalsIgnoreCase("chrome"))
+            browser = new ChromeBrowser();
+        else if (browserType.equalsIgnoreCase("edge"))
+            browser = new EdgeBrowser();
+        else if (browserType.equalsIgnoreCase("firefox"))
+            browser = new FireFoxBrowser();
+        else
+            throw new RuntimeException("Wrong browser type choose between chrome, firefox or edge");
+
+
+    driver = browser.openBrowser(isHeadless);
+
+//        if(browserType.equalsIgnoreCase("chrome")) {
+//            ChromeOptions options = new ChromeOptions();
+//            if (isHeadless)
+//                options.addArguments("--headless");
+//            driver = new ChromeDriver(options);
+//        }else if (browserType.equalsIgnoreCase("edge")) {
+//            EdgeOptions options = new EdgeOptions();
+//            if (isHeadless) options.addArguments("--headless");
+//            driver = new EdgeDriver(options);
+//        } else if (browserType.equalsIgnoreCase("firefox")) {
+//            FirefoxOptions options = new FirefoxOptions();
+//            if (isHeadless)
+//                options.addArguments("--headless");
+//            driver = new FirefoxDriver();
+//        }else {
+//            throw new RuntimeException("Wrong browser type choose between chrome, firefox, or edge");
+//        }
 
 
 
@@ -87,3 +107,4 @@ public abstract class BaseSetup {
         return driver;
     }
 }
+
