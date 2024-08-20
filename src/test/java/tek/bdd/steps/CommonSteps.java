@@ -5,8 +5,10 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import tek.bdd.pages.AccountPage;
 import tek.bdd.utility.SeleniumUtility;
+import tek.bdd.pages.HomePage;
 
 public class CommonSteps extends SeleniumUtility {
     @Given("user click on {string} link")
@@ -16,13 +18,18 @@ public class CommonSteps extends SeleniumUtility {
 
     @When("user click on {string} button")
     public void user_click_on_button(String buttonVisibleText) {
-        String buttonXpath = "//button[text()='" + buttonVisibleText + "']";
-        clickOnElement(By.xpath(buttonXpath));
+        try {
+            String buttonXpath = "//button[text()='" + buttonVisibleText + "']";
+            clickOnElement(By.xpath(buttonXpath));
+        } catch (TimeoutException ex) {
+            String buttonXpath = "//*[text()='" + buttonVisibleText + "']/..";
+            clickOnElement(By.xpath(buttonXpath));
+        }
     }
 
     @When("user enter {string} on {string} field")
     public void userEnterTextToAnyField(String text, String fieldName) {
-        String xpath = " //lable[text()='"+fieldName+"']/..//input";
+        String xpath = " //label[text()='" + fieldName + "']/..//input";
         sendText(By.xpath(xpath), text);
     }
 
@@ -39,6 +46,11 @@ public class CommonSteps extends SeleniumUtility {
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
+    }
+
+    @When("user click on cart link")
+    public void user_click_on_cart_link() {
+        clickOnElement(HomePage.CART_LINK);
     }
 
 
