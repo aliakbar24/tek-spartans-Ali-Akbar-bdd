@@ -1,25 +1,18 @@
 package tek.bdd.base;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
+import tek.bdd.browsers.BaseBrowser;
+import tek.bdd.browsers.ChromeBrowser;
+import tek.bdd.browsers.EdgeBrowser;
+import tek.bdd.browsers.FireFoxBrowser;
 
-import javax.swing.plaf.metal.MetalLookAndFeel;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Properties;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import tek.bdd.browsers.BaseBrowser;
-import tek.bdd.browsers.ChromeBrowser;
-import tek.bdd.browsers.EdgeBrowser;
-import tek.bdd.browsers.FireFoxBrowser;
 
 public abstract class BaseSetup {
     private static final Logger LOGGER = LogManager.getLogger(BaseSetup.class);
