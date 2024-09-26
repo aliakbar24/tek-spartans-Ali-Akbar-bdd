@@ -10,7 +10,7 @@
     @UsingMap
     Scenario: Using a Map as Data Table
       When user enter new account info
-        | name     | Mohammad     |
+        | name     | Ali     |
         | email    | random       |
         | password | Password@123 |
       When user click on "Sign Up" button
@@ -20,7 +20,7 @@
     @UsingList
     Scenario: Using List as Data Table
       When user enter new account info using list Data
-        | Mohammad     |
+        | Ali     |
         | random       |
         | Password@123 |
       When user click on "Sign Up" button
@@ -41,7 +41,7 @@
       When user enter new account as list of maps
         | name     | email  | password     |
         | John     | random | John@123     |
-        | Mohammad | random | Password@123 |
+        | Ali | random | Password@123 |
       When user click on "Sign Up" button
       Then validate user is in account page
       Then validate email address in account page match

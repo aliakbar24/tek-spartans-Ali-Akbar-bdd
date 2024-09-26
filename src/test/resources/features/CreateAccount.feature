@@ -16,4 +16,4 @@ Feature: Creating account scenarios
   Scenario: Create account with existing email
     When user enter "Ali" and "akbar.ali@gmail.com" and "Password@123"
     When user click on "Sign Up" button
-    Then user should see error "this email already exists, please use another email address"
+    Then user should see error "this email is already exist, please use another email address"
